@@ -12,7 +12,7 @@ import Navbar from './components/Navbar';
 
 // Context
 import { RoomProvider } from './context/RoomContext';
-
+const checking ="just checking"
 const AppContainer = styled.div`
   min-height: 100vh;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
