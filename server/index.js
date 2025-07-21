@@ -15,38 +15,21 @@ const server = http.createServer(app);
 
 // --- CORS Configuration ---
 // Define allowed origins from environment variables or defaults
-const allowedOrigins = [
-    'http://localhost:3000',                              // Local development client
-    process.env.FRONTEND_URL                              // Dynamically from environment variable
-].filter(Boolean); // Remove any undefined/null values
+// const allowedOrigins = [
+//     'http://localhost:3000',                              // Local development client
+//     process.env.FRONTEND_URL                              // Dynamically from environment variable
+// ].filter(Boolean); // Remove any undefined/null values
 
 // CORS for Express API routes
 app.use(cors({
-    origin: function(origin, callback) {
-        // Allow requests with no origin (e.g., direct API calls, mobile apps)
-        if (!origin) return callback(null, true); 
-        if (allowedOrigins.indexOf(origin) === -1) {
-            console.log(`Origin ${origin} not allowed by Express CORS`);
-            return callback(new Error('Not allowed by CORS'));
-        }
-        return callback(null, true);
-    },
-    credentials: true,
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
+    origin:true,
+    credentials:true
 }));
 
 // Socket.io CORS configuration
 const io = socketIo(server, {
     cors: {
-        origin: function(origin, callback) {
-            if (!origin) return callback(null, true); // Allow requests with no origin
-            if (allowedOrigins.indexOf(origin) === -1) {
-                console.log(`Origin ${origin} not allowed by Socket.io CORS`);
-                return callback(new Error('Not allowed by CORS'));
-            }
-            return callback(null, true);
-        },
+        origin:true,
         methods: ['GET', 'POST'],
         credentials: true
     },
